@@ -1,0 +1,209 @@
+body {
+    font-family: "Plus Jakarta Sans", serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh !important;
+    min-width: fit-content;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative;
+}
+
+.container {
+    padding: 0 2rem 0  2rem !important;
+    margin: 0 !important;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #ebebeb !important;
+}
+
+.fa-compass {
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+
+.nav-link {
+    color: #222 !important;
+}
+
+/* footer */
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;   
+}
+
+.f-info-socials i {
+   margin-right: 1rem;
+   font-size: 1.2rem;
+}
+
+.f-info-links, .f-info-socials,.f-info-brand  {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.f-info {
+    text-align: center;
+    height: 8rem;
+    display: flex;
+    background-color: #ebebeb;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+
+/* home page  */
+.icon-custom {
+    color: #fe424d;
+}
+
+
+.check-availability {
+    padding-left: 1rem;
+}
+
+.Check {
+    border-radius: 1rem !important;
+    
+}
+
+/* body {
+    font-family: 'Inter', sans-serif;
+} */
+.highlight {
+    position: relative;
+}
+.highlight::after {
+    content: '';
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 5px !important;
+    background-color: #6f42c1 !important;
+}
+.rounded-circle-border {
+    border: 2px solid white !important;
+}
+.btn-danger {
+    background-color: #fe424d !important;
+    color: white !important;
+}
+.btn-custom:hover {
+    background-color: #e63b44 !important;
+    color: white !important;
+}
+.icon-custom {
+    color: #fe424d !important;
+}
+.img-custom {
+    height: 500px !important;
+    object-fit: cover !important;
+}
+/* cards */
+.listing-card {
+    border: none !important;
+    /* margin-bottom: 2rem; */
+    margin-left: 1rem ;
+    margin-bottom: 1rem;
+    margin-right: 0 ;
+    padding: 0 !important;
+    width: space-between !important;    
+}
+
+.row {
+    margin: 0 0 0 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-weight: 400 !important;
+}
+
+.card-link {
+    text-decoration: none;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* card Effect */
+.card-img-overlay {
+    opacity: 0;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: white;
+}
+
+/* New page */
+.add-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* Edit page  */
+.edit-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* Custom box shadow for the input */
+.blurred-border {
+    transition: box-shadow 0.3s ease !important; /* Smooth transition for the shadow */
+}
+
+/* Box shadow when the input is focused */
+.blurred-border:focus {
+    box-shadow: 0 4px 6px  rgba(254, 66, 77, 0.5) !important; /* Custom shadow color */
+    border-color: #fe424d !important; /* Change border color to match the shadow */
+    outline: none !important; /* Remove default outline */
+}
+
+/* show page */
+
+.show-img {
+    height: 30vh !important;
+}
+
+.btns {
+    display: flex;
+}
+
+.show-card {
+   padding-left: 0;
+   padding-right: 0; 
+}
+
+.btn-outline-danger:hover {
+    background-color: #fe424d !important;
+    border-color: white !important;
+}
+
+hr {
+    border-top: 2px solid black !important;
+}
+

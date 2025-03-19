@@ -1,0 +1,39 @@
+<% layout("/layout/boilerplate") %>
+<div class="col-8 offset-2 mt-3">
+    <h3>Edit this listing</h3>
+    <form method="post" action="/listings/<%= listing._id %>?_method=PUT">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title :</label>
+            <input type="text" name="listing[title]" value="<%= listing.title %>" class="form-control blurred-border">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="listing[description]" class="form-control blurred-border"><%= listing.description  %></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image URL</label>
+            <input type="text" name="listing[imageUrl]" value="<%= listing.imageUrl %>" class="form-control blurred-border">
+        </div>
+
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" name="listing[price]" value="<%= listing.price %>" class="form-control blurred-border">
+            </div>
+
+            <div class="mb-3 col-md-8">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control blurred-border">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control blurred-border">
+        </div>
+
+        <button class="btn btn-dark edit-btn mt-3">Save</button>
+        <br><br>
+    </form>
+</div>
+

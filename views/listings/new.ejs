@@ -1,0 +1,64 @@
+<% layout("/layout/boilerplate") %>
+    <div class="row">
+        <div class="col-8 offset-2 mt-3">
+            <h3>Add New Place</h3>
+            <form method="post" action="/listings" novalidate class="needs-validation">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" id="title" name="listing[title]" placeholder="Add a meaningful title" class="form-control blurred-border" required>
+                    <div class="valid-feedback">Looks Good!</div>
+                    <div class="invalid-feedback">
+                        Title required.
+                      </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listing[description]" id="description" placeholder="Enter description"
+                        class="form-control blurred-border" required></textarea>
+                        <div class="valid-feedback">Looks Good!</div>
+                        <div class="invalid-feedback">
+                            Description required.
+                          </div>
+                    </div>
+
+                <!-- <br> <br> -->
+                <!-- <input type="text" name="listing[image.filename]" placeholder="Enter filename"> -->
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image URL</label>
+                    <input type="text" id="image" name="listing[imageUrl]" placeholder="Enter image link/url"
+                        class="form-control blurred-border">
+                </div>
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" id="price" name="listing[price]" placeholder="1000" class="form-control blurred-border" required>
+                    <div class="valid-feedback">Looks Good!</div>
+                    <div class="invalid-feedback">
+                        Price required.
+                      </div>
+                </div>
+
+                <div class="mb-3 col-md-8">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" id="country" name="listing[country]" placeholder="India"
+                        class="form-control blurred-border" required>
+                        <div class="valid-feedback">Looks Good!</div>
+                        <div class="invalid-feedback">
+                            Country name required.
+                          </div>
+                    </div>
+            </div>
+
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" id="location" name="listing[location]" placeholder="Ayodhya, Uttar Prdesh"
+                        class="form-control blurred-border" required>
+                        <div class="valid-feedback">Looks Good!</div>
+                    </div>
+
+                <button class="btn btn-dark add-btn mt-3">Add</button>
+                <br><br>
+            </form>
+        </div>
+    </div>

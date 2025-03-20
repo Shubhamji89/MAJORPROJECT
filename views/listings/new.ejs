@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-8 offset-2 mt-3">
             <h3>Add New Place</h3>
-            <form method="post" action="/listings" novalidate class="needs-validation">
+            <form method="post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" id="title" name="listing[title]" placeholder="Add a meaningful title" class="form-control blurred-border" required>
@@ -25,8 +25,8 @@
                 <!-- <br> <br> -->
                 <!-- <input type="text" name="listing[image.filename]" placeholder="Enter filename"> -->
                 <div class="mb-3">
-                    <label for="image" class="form-label">Image URL</label>
-                    <input type="text" id="image" name="listing[imageUrl]" placeholder="Enter image link/url"
+                    <label for="image" class="form-label">Listing Image</label>
+                    <input type="file" id="image" name="listing[imageUrl]" 
                         class="form-control blurred-border">
                 </div>
             <div class="row">

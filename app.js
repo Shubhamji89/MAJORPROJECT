@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 process.noDeprecation = true; // disable deprecation warnings
 
 const express = require("express");

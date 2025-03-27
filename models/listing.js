@@ -8,16 +8,10 @@ const listingSchema = new Schema({
     required: true,
   },
   description: String,
-  imageUrl: {
-      type: String,
-      required: false,
-      default:
-        "https://media.istockphoto.com/id/1126610893/photo/paradise-sandy-beach-with-coco-palm.jpg?s=2048x2048&w=is&k=20&c=sZwpnfB1ybwfQbIXf_jauNJXVWoQoZMUcWMFkjS1iiA=",
-      set: (v) =>
-        v === ""
-          ? "https://media.istockphoto.com/id/1126610893/photo/paradise-sandy-beach-with-coco-palm.jpg?s=2048x2048&w=is&k=20&c=sZwpnfB1ybwfQbIXf_jauNJXVWoQoZMUcWMFkjS1iiA="
-          : v,
-    },
+  image: {
+    url: { type: String, default: "" }, // Default to empty string
+    filename: { type: String, default: "" }, // Default to empty string
+  },
   price: Number,
   location: String,
   country: String,
@@ -41,8 +35,7 @@ listingSchema.post("findOneAndDelete", async function (listing) {
       },
     });
   }
-}
-);
+});
 
 const Listing = mongoose.model("Listing", listingSchema);
 module.exports = Listing;

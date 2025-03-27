@@ -9,17 +9,11 @@
   </div>
 
   <div class="card col-6 offset-3 show-card listing-card">
-    <% if (listing && listing.imageUrl) { %>
+    <% if (listing && listing.image && listing.image.url) { %> <!-- Check for image existence -->
     <img
-      src="<%= listing.imageUrl %>"
+      src="<%= listing.image.url %>"
       class="card-img-top show-img"
       alt="Listing Image"
-    />
-    <% } else { %>
-    <img
-      src="/images/default.jpg"
-      class="card-img-top show-img"
-      alt="Default Image"
     />
     <% } %>
     <div class="card-body">

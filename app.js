@@ -31,7 +31,15 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(dbUrl);
+  try {
+    await mongoose.connect(dbUrl);
+    console.log("Connected to DB");
+  } catch (err) {
+    console.error("DB Connection Failed:", err);
+    if (process.env.NODE_ENV === "production") {
+      process.exit(1); // Exit in production to prevent partial startup
+    }
+  }
 }
 
 app.set("view engine", "ejs");

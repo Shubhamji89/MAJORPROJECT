@@ -24,12 +24,19 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 const isProduction = process.env.NODE_ENV === "production";
-const dbUrl = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/test";
+const localDbUrl = process.env.LOCAL_DB_URL || "mongodb://127.0.0.1:27017/wanderlust";
+const useAtlasInDev = process.env.USE_ATLAS === "true";
+const dbUrl = isProduction || useAtlasInDev
+  ? process.env.ATLASDB_URL || localDbUrl
+  : localDbUrl;
+if (isProduction && !process.env.ATLASDB_URL) {
+  throw new Error("ATLASDB_URL environment variable is required in production.");
+}
 if (!process.env.SECRET && isProduction) {
   throw new Error("SECRET environment variable is required in production.");
 }
 const sessionSecret = process.env.SECRET || "dev-secret-change-me";
-const PORT = process.env.PORT || 8081;
+const PORT = process.env.PORT || 8080;
 
 async function main() {
   try {

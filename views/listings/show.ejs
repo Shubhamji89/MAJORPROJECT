@@ -46,6 +46,7 @@
     >Edit</a
   >
   <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <button class="btn btn-dark offset-5">Delete</button>
   </form>
   <% } %>
@@ -63,6 +64,7 @@
     class="needs-validation"
     action="/listings/<%= listing._id %>/reviews"
   >
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <div class="mb-3 mt-3">
       <label for="rating" class="form-label">Rating</label>
       <fieldset class="starability-slot">
@@ -119,6 +121,7 @@
             action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
             method="post"
           >
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn sm btn-danger mt-3">Delete</button>
           </form>
         <% } %>

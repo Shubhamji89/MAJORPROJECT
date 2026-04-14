@@ -5,7 +5,23 @@ const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 const listingsController = require("../controllers/listings.js");
 const multer  = require('multer');
 const { storage } = require("../cloudConfig.js");
-const upload = multer({ storage });
+const allowedMimeTypes = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/jpg",
+  "image/webp",
+]);
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (allowedMimeTypes.has(file.mimetype)) {
+      return cb(null, true);
+    }
+    cb(new Error("Only JPG, JPEG, PNG, and WEBP images up to 10MB are allowed."));
+  },
+});
 
 
 

@@ -14,6 +14,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongo");
 const flash = require("connect-flash");
+const csrf = require("csurf");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
@@ -22,13 +23,13 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-const dbUrl = process.env.ATLASDB_URL;
-
-main()
-  .then(() => {
-    console.log("connected to DB");
-  })
-  .catch((err) => console.log(err));
+const isProduction = process.env.NODE_ENV === "production";
+const dbUrl = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/test";
+if (!process.env.SECRET && isProduction) {
+  throw new Error("SECRET environment variable is required in production.");
+}
+const sessionSecret = process.env.SECRET || "dev-secret-change-me";
+const PORT = process.env.PORT || 8081;
 
 async function main() {
   try {
@@ -36,24 +37,23 @@ async function main() {
     console.log("Connected to DB");
   } catch (err) {
     console.error("DB Connection Failed:", err);
-    if (process.env.NODE_ENV === "production") {
-      process.exit(1); // Exit in production to prevent partial startup
-    }
+    process.exit(1);
   }
 }
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.urlencoded({ extended: true }));
+if (isProduction) {
+  app.set("trust proxy", 1);
+}
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+app.use(express.json({ limit: "10kb" }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 const store = MongoDBStore.create({
   mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET,
-  },
   touchAfter : 24 * 60 * 60,
 });
 
@@ -63,11 +63,13 @@ store.on("error", function (e) {
 
 const sessionOptions = {
   store,
-  secret: process.env.SECRET,
+  secret: sessionSecret,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     httpOnly: true,
+    sameSite: "lax",
+    secure: isProduction,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
@@ -76,6 +78,20 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash());
+app.use(
+  csrf({
+    value: (req) => {
+      return (
+        (req.body && req.body._csrf) ||
+        (req.query && req.query._csrf) ||
+        req.headers["csrf-token"] ||
+        req.headers["xsrf-token"] ||
+        req.headers["x-csrf-token"] ||
+        req.headers["x-xsrf-token"]
+      );
+    },
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -88,7 +104,12 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;
+  res.locals.csrfToken = req.csrfToken();
   next();
+});
+
+app.get("/", (req, res) => {
+  res.render("listings/home");
 });
 
 app.use("/listings", listingRouter);
@@ -101,10 +122,16 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err); // Prevents setting headers twice
+  if (err.code === "EBADCSRFTOKEN") {
+    req.flash("error", "Invalid or expired form token. Please try again.");
+    return res.redirect("back");
+  }
   let { statusCode = 500 } = err;
   res.status(statusCode).render("error", { err });
 });
 
-app.listen(8080, () => {
-  console.log("Server running on port 8080");
+main().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 });
